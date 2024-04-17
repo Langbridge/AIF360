@@ -96,7 +96,7 @@ def load_preproc_data_compas(protected_attributes=None):
 
         df = df[['age', 'c_charge_degree', 'race', 'age_cat', 'score_text',
                  'sex', 'priors_count', 'days_b_screening_arrest', 'decile_score',
-                 'is_recid', 'two_year_recid', 'c_jail_in', 'c_jail_out']]
+                 'is_recid', 'two_year_recid', 'c_jail_in', 'c_jail_out','juv_fel_count', 'juv_misd_count']]
 
         # Indices of data samples to keep
         ix = df['days_b_screening_arrest'] <= 30
@@ -108,13 +108,15 @@ def load_preproc_data_compas(protected_attributes=None):
         df['length_of_stay'] = (pd.to_datetime(df['c_jail_out'])-
                                 pd.to_datetime(df['c_jail_in'])).apply(
                                                         lambda x: x.days)
+        df['priors_total_count'] = df['juv_misd_count'] + df['priors_count'] + df['juv_fel_count']
+
 
         # Restrict races to African-American and Caucasian
         dfcut = df.loc[~df['race'].isin(['Native American','Hispanic','Asian','Other']),:]
 
         # Restrict the features to use
         dfcutQ = dfcut[['sex','race','age_cat','c_charge_degree','score_text','priors_count','is_recid',
-                'two_year_recid','length_of_stay']].copy()
+                'two_year_recid','length_of_stay','decile_score','age','priors_total_count']].copy()
 
         # Quantize priors count between 0, 1-3, and >3
         def quantizePrior(x):
@@ -165,14 +167,14 @@ def load_preproc_data_compas(protected_attributes=None):
 
         features = ['two_year_recid',
                     'sex', 'race',
-                    'age_cat', 'priors_count', 'c_charge_degree']
+                    'age_cat', 'priors_count', 'c_charge_degree', 'decile_score','age','priors_total_count']
 
         # Pass vallue to df
         df = dfcutQ[features]
 
         return df
 
-    XD_features = ['age_cat', 'c_charge_degree', 'priors_count', 'sex', 'race']
+    XD_features = ['age_cat', 'c_charge_degree', 'priors_count', 'sex', 'race', 'decile_score','age','priors_total_count']
     D_features = ['sex', 'race']  if protected_attributes is None else protected_attributes
     Y_features = ['two_year_recid']
     X_features = list(set(XD_features)-set(D_features))
