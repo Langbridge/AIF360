@@ -41,12 +41,16 @@ extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.mathjax']
 
+flv = tuple(map(int, fairlearn.__version__.split('.')))
+if flv > (0, 7, 0) and flv[-1] == 0:
+    flv = flv[:-1]
+flv = '.'.join(map(str, flv))
 intersphinx_mapping = {
-    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
-    'scipy': ('https://docs.scipy.org/doc/scipy/reference/', None),
+    'numpy': ('https://numpy.org/doc/stable/', None),
+    'scipy': ('https://docs.scipy.org/doc/scipy/', None),
     'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
     'sklearn': ('https://scikit-learn.org/stable/', None),
-    'fairlearn': (f'https://fairlearn.github.io/v{fairlearn.__version__}/', None),
+    'fairlearn': (f'https://fairlearn.org/v{flv}/', None),
     'python': ('https://docs.python.org/{}.{}'.format(*sys.version_info), None),
     'inFairness': ('https://ibm.github.io/inFairness/', None),
     'skorch': ('https://skorch.readthedocs.io/en/stable/', None),
@@ -97,7 +101,7 @@ version = '.'.join(release.split('.')[:2])
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = 'en'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -117,21 +121,16 @@ pygments_style = 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
 
+# If true, parameters with trailing underscores will be properly escaped.
+strip_signature_backslash = True
+
 
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-# html_theme = 'bizstyle'
-if os.environ.get('READTHEDOCS') != 'True':
-    try:
-        import sphinx_rtd_theme
-    except ImportError:
-        pass  # assume we have sphinx >= 1.3
-    else:
-        html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-    html_theme = 'sphinx_rtd_theme'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

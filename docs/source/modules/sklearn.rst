@@ -119,7 +119,6 @@ Group fairness metrics
    metrics.smoothed_edf
    metrics.df_bias_amplification
    metrics.between_group_generalized_entropy_error
-   metrics.mdss_bias_scan
    metrics.mdss_bias_score
 
 Individual fairness metrics
@@ -151,7 +150,14 @@ Bias scan
    :toctree: generated/
    :template: base.rst
 
-   detectors.bias_scan
+   detectors.MDSS_bias_scan
+   detectors.FACTS_bias_scan
+
+.. autosummary::
+   :toctree: generated/
+   :template: class.rst
+
+   detectors.FACTS
 
 :mod:`aif360.sklearn.preprocessing`: Pre-processing algorithms
 ==============================================================

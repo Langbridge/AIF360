@@ -82,7 +82,7 @@ you wish to contribute to this, please reach out
 Website
 -------
 Any comments or suggestions regarding the
-`AIF360 homepage <https://aif360.mybluemix.net/>`_ may be posted to GitHub as
+`AIF360 homepage <https://aif360.res.ibm.com/>`_ may be posted to GitHub as
 well. This content may eventually be merged with the rest of the documentation.
 
 Example Notebooks
@@ -260,7 +260,7 @@ a draft and ask for help.
 First-time contributors require approval to run workflows with GitHub actions. CI
 should run unit tests for both Python and R for all supported versions as well as
 print linter warnings. See
-`ci.yml <https://github.com/Trusted-AI/AIF360/blob/master/.github/workflows/ci.yml>`_
+`ci.yml <https://github.com/Trusted-AI/AIF360/blob/main/.github/workflows/ci.yml>`_
 for the latest build script.
 
 Community
