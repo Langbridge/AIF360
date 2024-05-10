@@ -69,8 +69,8 @@ class BaseLDS(Transformer):
         arr = self._generate_scores(D_test, privileged_test, unprivileged_test)
         scores = self._normalise_score(arr)
         
-        # D_test.labels = (scores > 0.5).astype(int)
         D_test.labels = scores
+
         return D_test
 
     def fit_predict(self, D_train, D_test, level=1):
