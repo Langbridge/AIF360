@@ -73,9 +73,9 @@ class DistributionalRepair(Transformer):
         return np.linspace(min_val, max_val, n_q).reshape(-1,1)
 
     def _get_pmfs(self, x_R, s_R, u_R, feat, u_val):
-        kde_0 = KernelDensity(kernel='gaussian').fit(x_R[(u_R == u_val) & (s_R == 0.0)][feat].values.reshape(-1,1))
+        kde_0 = KernelDensity(kernel='gaussian',bandwidth='silverman').fit(x_R[(u_R == u_val) & (s_R == 0.0)][feat].values.reshape(-1,1))
         pmf_0 = np.exp(kde_0.score_samples(self.support))
-        kde_1 = KernelDensity(kernel='gaussian').fit(x_R[(u_R == u_val) & (s_R == 1.0)][feat].values.reshape(-1,1))
+        kde_1 = KernelDensity(kernel='gaussian',bandwidth='silverman').fit(x_R[(u_R == u_val) & (s_R == 1.0)][feat].values.reshape(-1,1))
         pmf_1 = np.exp(kde_1.score_samples(self.support))
         pmf_0 /= np.sum(pmf_0)
         pmf_1 /= np.sum(pmf_1)
