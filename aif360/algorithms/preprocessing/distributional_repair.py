@@ -66,7 +66,7 @@ class DistributionalRepair(Transformer):
 
         Args:
             feat (str): Name of the continuous feature.
-            u_val (int): Value of the outcome variable.
+            u_val (int): Value of the observed variable.
         """
         support = self._get_support(feat, u_val)
         self.supports[(feat, u_val)] = support
@@ -83,7 +83,7 @@ class DistributionalRepair(Transformer):
 
         Args:
             feat (str): Name of the discrete feature.
-            u_val (int): Value of the outcome variable.
+            u_val (int): Value of the observed variable.
         """
         if self._is_valid_data(u_val):
             pmf_0, pmf_1 = self._get_discrete_pmfs(feat, u_val)
@@ -161,7 +161,7 @@ class DistributionalRepair(Transformer):
 
         Args:
             feat (str): Name of the continuous feature.
-            u_val (int): Value of the outcome variable.
+            u_val (int): Value of the observed variable.
 
         Returns:
             ndarray: Support for the continuous feature.
@@ -175,7 +175,7 @@ class DistributionalRepair(Transformer):
 
         Args:
             feat (str): Name of the continuous feature.
-            u_val (int): Value of the outcome variable.
+            u_val (int): Value of the observed variable.
 
         Returns:
             tuple: PMFs for the protected and unprotected groups.
@@ -200,7 +200,7 @@ class DistributionalRepair(Transformer):
             pmf_0 (ndarray): PMF for the protected group.
             pmf_1 (ndarray): PMF for the unprotected group.
             feat (str): Name of the feature.
-            u_val (int): Value of the outcome variable.
+            u_val (int): Value of the observed variable.
 
         Returns:
             ndarray: Barycenter of the PMFs.
@@ -223,7 +223,7 @@ class DistributionalRepair(Transformer):
             pmf_1 (ndarray): PMF for the unprotected group.
             barycenter (ndarray): Barycenter of the PMFs.
             feat (str): Name of the feature.
-            u_val (int): Value of the outcome variable.
+            u_val (int): Value of the observed variable.
 
         Returns:
             tuple: Transport plans from PMF_0 to barycenter and from PMF_1 to barycenter.
@@ -237,7 +237,7 @@ class DistributionalRepair(Transformer):
         """Check if the data is valid for a given outcome value.
 
         Args:
-            u_val (int): Value of the outcome variable.
+            u_val (int): Value of the observed variable.
 
         Returns:
             bool: True if the data is valid, False otherwise.
@@ -249,7 +249,7 @@ class DistributionalRepair(Transformer):
 
         Args:
             feat (str): Name of the discrete feature.
-            u_val (int): Value of the outcome variable.
+            u_val (int): Value of the observed variable.
 
         Returns:
             tuple: PMFs for the protected and unprotected groups.
@@ -277,11 +277,11 @@ class DistributionalRepair(Transformer):
 
         Args:
             s_D (Series): Protected attribute series.
-            u_D (Series): Outcome series.
-            x_D (DataFrame): Feature dataframe.
+            u_D (Series): Observed series.
+            x_D (DataFrame): Repair Features dataframe.
             feat (str): Name of the feature.
             tilde_x_D (DataFrame): Transformed feature dataframe.
-            u_val (int): Value of the outcome variable.
+            u_val (int): Value of the observed variable.
             support (ndarray): Support for the continuous feature.
             T_0 (ndarray): Transport plan from PMF_0 to barycenter.
             T_1 (ndarray): Transport plan from PMF_1 to barycenter.
@@ -301,11 +301,11 @@ class DistributionalRepair(Transformer):
 
         Args:
             s_D (Series): Protected attribute series.
-            u_D (Series): Outcome series.
-            x_D (DataFrame): Feature dataframe.
+            u_D (Series): Observed series.
+            x_D (DataFrame): Repair Features dataframe.
             feat (str): Name of the feature.
             tilde_x_D (DataFrame): Transformed feature dataframe.
-            u_val (int): Value of the outcome variable.
+            u_val (int): Value of the observed variable.
 
         Returns:
             DataFrame: Transformed feature dataframe.
