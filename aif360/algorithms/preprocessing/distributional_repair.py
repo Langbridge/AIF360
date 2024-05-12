@@ -19,9 +19,9 @@ class DistributionalRepair(Transformer):
 
     Args:
         s (str): Name of the protected attribute.
-        u (str): Name of the outcome variable.
-        x (list): List of feature names to be repaired.
-        y (str): Name of the target variable.
+        u (str): Name of the observed variable.
+        x (list): List of feature names to be repaired (remaining observations).
+        y (str): Name of the outcome variable.
         continuous_features (list): List of continuous feature names.
         n_q (int, optional): Number of quantiles for continuous features. Defaults to 250.
     """
