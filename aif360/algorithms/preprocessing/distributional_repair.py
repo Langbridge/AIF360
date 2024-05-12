@@ -1,5 +1,3 @@
-from warnings import warn
-
 import numpy as np
 import pandas as pd
 
@@ -12,6 +10,9 @@ import ot
 
 class DistributionalRepair(Transformer):
     """Distributional Repair class for mitigating bias in datasets.
+
+    Adapted from the work of Abigail Longbridge et al.
+    https://arxiv.org/pdf/2403.13864
 
     This class implements the Distributional Repair algorithm to mitigate bias
     in datasets by aligning the distributions of protected and unprotected groups
