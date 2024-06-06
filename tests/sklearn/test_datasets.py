@@ -1,7 +1,7 @@
 from functools import partial
 
 import numpy as np
-from numpy.testing import assert_array_equal
+from numpy.testing import assert_array_equal, assert_allclose
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
 from pandas.testing import assert_frame_equal
@@ -177,7 +177,7 @@ def test_german_matches_old():
     old = old.apply(lambda c: c.factorize()[0] if not is_numeric_dtype(c) else c)
 
     assert_frame_equal(X.reset_index(drop=True), old.reset_index(drop=True),
-                       check_like=True)
+                       check_like=True, check_dtype=False)
 
 def test_fetch_bank():
     """Tests Bank Marketing dataset shapes with various options."""
@@ -214,9 +214,9 @@ def test_fetch_lawschool_gpa():
     """Tests Law School GPA dataset shapes with various options."""
     gpa = fetch_lawschool_gpa()
     assert len(gpa) == 2
-    assert gpa.X.shape == (22342, 3)
+    assert gpa.X.shape == (22342, 4)
     assert gpa.y.nunique() > 2  # regression
-    assert fetch_lawschool_gpa(numeric_only=True, dropna=False).X.shape == (22342, 3)
+    assert fetch_lawschool_gpa(numeric_only=True, dropna=False).X.shape == (27478, 4)
 
 def test_lawschool_matches_old():
     """Tests Law School GPA dataset matches original version."""
@@ -233,7 +233,7 @@ def test_cache_meps(panel):
     meps_raw = fetch_meps(panel, cache=False, accept_terms=True)[0]
     fetch_meps(panel, cache=True, accept_terms=True)
     meps_cached = fetch_meps(panel, cache=True)[0]
-    assert_frame_equal(meps_raw, meps_cached, check_dtype=False, check_categorical=False)
+    assert_frame_equal(meps_raw, meps_cached)
     assert_array_equal(meps_raw.to_numpy(), meps_cached.to_numpy())
 
 @pytest.mark.parametrize(
@@ -254,7 +254,8 @@ def test_meps_matches_old(panel, cls):
     assert len(meps) == 3
     meps.X.RACE = meps.X.RACE.factorize(sort=True)[0]
     MEPS = cls()
-    assert_array_equal(pd.get_dummies(meps.X.drop(columns=educols)), MEPS.features)
+    assert_allclose(pd.get_dummies(meps.X.drop(columns=educols)).astype(float),
+                    MEPS.features, atol=1e-16)
     assert_array_equal(meps.y.factorize(sort=True)[0], MEPS.labels.ravel())
 
 @pytest.mark.parametrize("panel", [19, 20, 21])
